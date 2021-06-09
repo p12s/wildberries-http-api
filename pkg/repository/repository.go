@@ -7,6 +7,7 @@ import (
 
 type Authorization interface {
 	CreateUser(user common.User) (int, error)
+	GetUser(username, password string) (common.User, error)
 }
 
 type Comment interface {
