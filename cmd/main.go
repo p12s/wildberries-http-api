@@ -1,25 +1,19 @@
 package main
 
 import (
+	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
+	"github.com/p12s/wildberries-http-api"
 	"github.com/p12s/wildberries-http-api/pkg/handler"
 	"github.com/p12s/wildberries-http-api/pkg/repository"
 	"github.com/p12s/wildberries-http-api/pkg/service"
-	"github.com/p12s/wildberries-http-api"
-	"fmt"
-	"github.com/joho/godotenv"
-	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	"net/http"
 	"os"
 )
 
 // TODO добавить доку
 // TODO переделать логирование на Zap
-
-func newHandler2(writer http.ResponseWriter, request *http.Request) {
-	fmt.Fprintf(writer, "Hello, man!\n\n")
-}
 
 func main() {
 	logrus.SetFormatter(new(logrus.JSONFormatter))
@@ -41,19 +35,13 @@ func main() {
 		Password: os.Getenv("DB_PASSWORD"),
 	})
 	if err != nil {
-		logrus.Fatalf("Failed to initialize DB: $s\n", err.Error())
+		logrus.Fatalf("Failed to initialize DB: %s\n", err.Error())
 	}
 	repos := repository.NewRepository(db)
 	services := service.NewService(repos)
 	handlers := handler.NewHandler(services)
 
-	/*http.HandleFunc("/lo2", newHandler2)
-	srv := new(Server)
-	if err := srv.Run(viper.GetString("port"), nil); err != nil {
-		logrus.Fatalf("error occured while running http server: %s", err.Error())
-	}*/
-
-	srv := new(Server)
+	srv := new(common.Server)
 	if err := srv.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
 		logrus.Fatalf("error occured while running http server: %s", err.Error())
 	}

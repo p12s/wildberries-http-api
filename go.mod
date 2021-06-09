@@ -1,4 +1,4 @@
-module github.com/p-12s/own-golang-manual/0-golang-test-assignment/wildberries/http-api
+module github.com/p12s/wildberries-http-api
 
 go 1.16
 

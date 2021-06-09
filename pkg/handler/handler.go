@@ -1,8 +1,10 @@
 package handler
 
 import (
-	"github.com/p12s/wildberries-http-api/pkg/service"
 	"github.com/gin-gonic/gin"
+	"github.com/p12s/wildberries-http-api/pkg/service"
+	//"github.com/swaggo/gin-swagger"
+	//"github.com/swaggo/gin-swagger/swaggerFiles"
 )
 
 type Handler struct {
@@ -18,17 +20,17 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 	// router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
-	v1 := router.Group("/api")
+	auth := router.Group("/auth")
 	{
-		api := router.Group("/v1", nil) //, h.userIdentity
-		{
-			auth := router.Group("/auth")
-			{
-				auth.POST("/sign-up", h.signUp)
-				auth.POST("/sign-in", h.signIn)
-			}
+		auth.POST("/sign-up", h.signUp)
+		auth.POST("/sign-in", h.signIn)
+	}
 
-			user := api.Group("/user")
+	api := router.Group("/api") // TODO так: /api/v1
+	{
+		v1 := api.Group("/v1", nil) //, h.userIdentity
+		{
+			user := v1.Group("/user")
 			{
 				user.POST("/", h.createUser)      // добавление
 				user.GET("/", h.getAllUsers)      // просмотр всех
@@ -43,7 +45,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 				}
 			}
 
-			comments := api.Group("comment")
+			comments := v1.Group("comment")
 			{
 				comments.GET("/:id", h.getCommentById)   // получение коммента
 				comments.PUT("/:id", h.updateComment)    // обновление
@@ -51,8 +53,6 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			}
 		}
 	}
-	//v1.GET("/hello", h.test)
 
-	_ = v1
 	return router
 }

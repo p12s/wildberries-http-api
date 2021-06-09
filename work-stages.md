@@ -22,17 +22,23 @@
   cmd/main.go
   
 ## Разворачиваем БД в докере (dev-версия)
-- Созданы файлы миграций командой
+Создаем файлы миграций командой
+```
   migrate create -ext sql -dir ./schema -seq init
-  Файлы
-  schema/000001_init.down.sql
-  schema/000001_init.up.sql
+```
+  Создадутся файлы:  
+  **schema/000001_init.down.sql**  
+  **schema/000001_init.up.sql**
 - Запустим докер и убедимся что контейнер с postgresql активен
+```
   docker pull postgres
   docker run --name=app-name -e POSTGRES_PASSWORD='qwerty' -p 5432:5432 -d postgres
   docker exec -it PID /bin/bash
+```
 - Запустим миграции
+```
   migrate -path ./schema -database 'postgres://postgres:qwerty@localhost:5432/postgres?sslmode=disable' up
+```
 - В контейнере можно убедиться, что БД с таблицами созданы
 ```
 docker ps

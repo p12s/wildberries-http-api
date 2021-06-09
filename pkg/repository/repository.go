@@ -1,12 +1,12 @@
 package repository
 
 import (
-	"github.com/p12s/wildberries-http-api"
 	"github.com/jmoiron/sqlx"
+	"github.com/p12s/wildberries-http-api"
 )
 
 type Authorization interface {
-	CreateUser(user User) (int, error)
+	CreateUser(user common.User) (int, error)
 }
 
 type Comment interface {
