@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	common "github.com/p12s/wildberries-http-api"
 	"github.com/p12s/wildberries-http-api/pkg/repository"
 )
@@ -21,6 +22,18 @@ func (s *CommentService) GetAll(userId int) ([]common.Comment, error) {
 	return s.repo.GetAll(userId)
 }
 
-func (s *CommentService) GetById(userId, listId int) (common.Comment, error) {
-	return s.repo.GetById(userId, listId)
+func (s *CommentService) GetById(userId, commentId int) (common.Comment, error) {
+	fmt.Println("service/comment.go userId commentId", userId, commentId)
+	return s.repo.GetById(userId, commentId)
+}
+
+func (s *CommentService) Update(userId, commentId int, input common.UpdateCommentInput) error {
+	if err := input.Validate(); err != nil {
+		return err
+	}
+	return s.repo.Update(userId, commentId, input)
+}
+
+func (s *CommentService) Delete(userId, listId int) error {
+	return s.repo.Delete(userId, listId)
 }
