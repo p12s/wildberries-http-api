@@ -11,11 +11,11 @@ type Authorization interface {
 }
 
 type Comment interface {
-	Create(userId int, comment common.Comment) (int, error)
-	GetAll(userId int) ([]common.Comment, error)
-	GetById(userId, commentId int) (common.Comment, error)
-	Update(userId, commentId int, input common.UpdateCommentInput) error
-	Delete(userId, commentId int) error
+	Create(idUser int, comment common.Comment) (int, error)
+	GetAll(idUser int) ([]common.Comment, error)
+	GetById(idUser, commentId int) (common.Comment, error)
+	Update(idUser, commentId int, input common.UpdateCommentInput) error
+	Delete(idUser, commentId int) error
 }
 
 type Repository struct {

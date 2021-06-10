@@ -8,7 +8,7 @@ import (
 )
 
 func (h *Handler) createComment(c *gin.Context) {
-	userId, err := getUserId(c)
+	idUser, err := getUserId(c)
 	if err != nil {
 		return
 	}
@@ -19,7 +19,7 @@ func (h *Handler) createComment(c *gin.Context) {
 		return
 	}
 
-	id, err := h.services.Comment.Create(userId, input)
+	id, err := h.services.Comment.Create(idUser, input)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -35,12 +35,11 @@ type getAllCommentsResponse struct {
 }
 
 func (h *Handler) getAllComments(c *gin.Context) {
-	userId, err := getUserId(c)
+	idUser, err := getUserId(c)
 	if err != nil {
 		return
 	}
-
-	comments, err := h.services.Comment.GetAll(userId)
+	comments, err := h.services.Comment.GetAll(idUser)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -52,7 +51,7 @@ func (h *Handler) getAllComments(c *gin.Context) {
 }
 
 func (h *Handler) getCommentById(c *gin.Context) {
-	userId, err := getUserId(c)
+	idUser, err := getUserId(c)
 	if err != nil {
 		return
 	}
@@ -63,7 +62,7 @@ func (h *Handler) getCommentById(c *gin.Context) {
 		return
 	}
 
-	comments, err := h.services.Comment.GetById(userId, id)
+	comments, err := h.services.Comment.GetById(idUser, id)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -73,7 +72,7 @@ func (h *Handler) getCommentById(c *gin.Context) {
 }
 
 func (h *Handler) updateComment(c *gin.Context) {
-	userId, err := getUserId(c)
+	idUser, err := getUserId(c)
 	if err != nil {
 		return
 	}
@@ -90,7 +89,7 @@ func (h *Handler) updateComment(c *gin.Context) {
 		return
 	}
 
-	if err := h.services.Comment.Update(userId, id, input); err != nil {
+	if err := h.services.Comment.Update(idUser, id, input); err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -99,7 +98,7 @@ func (h *Handler) updateComment(c *gin.Context) {
 }
 
 func (h *Handler) deleteComment(c *gin.Context) {
-	userId, err := getUserId(c)
+	idUser, err := getUserId(c)
 	if err != nil {
 		return
 	}
@@ -110,7 +109,7 @@ func (h *Handler) deleteComment(c *gin.Context) {
 		return
 	}
 
-	err = h.services.Comment.Delete(userId, id)
+	err = h.services.Comment.Delete(idUser, id)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return

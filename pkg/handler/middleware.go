@@ -13,7 +13,7 @@ import (
 
 const (
 	authorizationHandler = "Authorization"
-	userCtx              = "userId"
+	userCtx              = "idUser"
 )
 
 func (h *Handler) userIdentity(c *gin.Context) {
@@ -39,13 +39,13 @@ func (h *Handler) userIdentity(c *gin.Context) {
 		return
 	}
 
-	userId, err := h.services.Authorization.ParseToken(headerParts[1])
+	idUser, err := h.services.Authorization.ParseToken(headerParts[1])
 	if err != nil {
 		newErrorResponse(c, http.StatusUnauthorized, err.Error())
 		return
 	}
 
-	c.Set(userCtx, userId)
+	c.Set(userCtx, idUser)
 }
 
 func getUserId(c *gin.Context) (int, error) {

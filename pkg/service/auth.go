@@ -34,7 +34,7 @@ func generatePasswordHash(password string) string {
 
 type tokenClaims struct {
 	jwt.StandardClaims
-	UserId int `json:"user_id"`
+	IdUser int `json:"id_user"`
 }
 
 func (s *AuthService) GenerateToken(username, password string) (string, error) {
@@ -69,5 +69,5 @@ func (s *AuthService) ParseToken(accessToken string) (int, error) {
 		return 0, errors.New("token claims are not of type *token")
 	}
 
-	return claims.UserId, nil
+	return claims.IdUser, nil
 }

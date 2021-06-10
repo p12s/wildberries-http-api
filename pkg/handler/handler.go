@@ -26,31 +26,28 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		auth.POST("/sign-in", h.signIn)
 	}
 
-	api := router.Group("/api", h.userIdentity) // TODO так: /api/v1
+	api := router.Group("/api/v1", h.userIdentity)
 	{
-		v1 := api.Group("/v1")
+		user := api.Group("/user")
 		{
-			user := v1.Group("/user")
-			{
-				user.POST("/", h.createUser)      // добавление
-				user.GET("/", h.getAllUsers)      // просмотр всех
-				user.GET("/:id", h.getUserById)   // просмотр
-				user.PUT("/:id", h.updateUser)    // редактирование
-				user.DELETE("/:id", h.deleteUser) // удаление
+			user.POST("/", h.createUser)      // добавление
+			user.GET("/", h.getAllUsers)      // просмотр всех
+			user.GET("/:id", h.getUserById)   // просмотр
+			user.PUT("/:id", h.updateUser)    // редактирование
+			user.DELETE("/:id", h.deleteUser) // удаление
 
-				comments := user.Group(":id/comment")
-				{
-					comments.POST("/", h.createComment) // создание коммента
-					comments.GET("/", h.getAllComments) // показ всех комментов
-				}
-			}
-
-			comments := v1.Group("comment")
+			comments := user.Group(":id/comment")
 			{
-				comments.GET("/:id", h.getCommentById)   // получение коммента
-				comments.PUT("/:id", h.updateComment)    // обновление
-				comments.DELETE("/:id", h.deleteComment) // удаление
+				comments.POST("/", h.createComment) // создание коммента
+				comments.GET("/", h.getAllComments) // показ всех комментов
 			}
+		}
+
+		comments := api.Group("comment")
+		{
+			comments.GET("/:id", h.getCommentById)   // получение коммента
+			comments.PUT("/:id", h.updateComment)    // обновление
+			comments.DELETE("/:id", h.deleteComment) // удаление
 		}
 	}
 
