@@ -28,7 +28,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 	api := router.Group("/api", h.userIdentity) // TODO так: /api/v1
 	{
-		v1 := api.Group("/v1", nil) //, h.userIdentity
+		v1 := api.Group("/v1")
 		{
 			user := v1.Group("/user")
 			{

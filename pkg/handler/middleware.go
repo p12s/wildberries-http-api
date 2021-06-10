@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"errors"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strings"
@@ -8,11 +9,11 @@ import (
 
 /*
 Получаем токен пользователя, валидируем его и записываем в контекст
- */
+*/
 
 const (
 	authorizationHandler = "Authorization"
-	userCtx = "userId"
+	userCtx              = "userId"
 )
 
 func (h *Handler) userIdentity(c *gin.Context) {
@@ -28,6 +29,16 @@ func (h *Handler) userIdentity(c *gin.Context) {
 		return
 	}
 
+	if headerParts[0] != "Bearer" {
+		newErrorResponse(c, http.StatusUnauthorized, "invalid auth header")
+		return
+	}
+
+	if headerParts[1] == "" {
+		newErrorResponse(c, http.StatusUnauthorized, "token is empty")
+		return
+	}
+
 	userId, err := h.services.Authorization.ParseToken(headerParts[1])
 	if err != nil {
 		newErrorResponse(c, http.StatusUnauthorized, err.Error())
@@ -35,4 +46,20 @@ func (h *Handler) userIdentity(c *gin.Context) {
 	}
 
 	c.Set(userCtx, userId)
+}
+
+func getUserId(c *gin.Context) (int, error) {
+	id, ok := c.Get(userCtx)
+	if !ok {
+		newErrorResponse(c, http.StatusInternalServerError, "user id not found")
+		return 0, errors.New("user id not found")
+	}
+
+	idInt, ok := id.(int)
+	if !ok {
+		newErrorResponse(c, http.StatusInternalServerError, "user id is invalid type")
+		return 0, errors.New("user id is invalid type")
+	}
+
+	return idInt, nil
 }

@@ -12,6 +12,9 @@ type Authorization interface {
 }
 
 type Comment interface {
+	Create(userId int, comment common.Comment) (int, error)
+	GetAll(userId int) ([]common.Comment, error)
+	GetById(userId, listId int) (common.Comment, error)
 }
 
 type Service struct {
@@ -22,5 +25,6 @@ type Service struct {
 func NewService(repos *repository.Repository) *Service {
 	return &Service{
 		Authorization: NewAuthService(repos.Authorization),
+		Comment:       NewCommentService(repos.Comment),
 	}
 }

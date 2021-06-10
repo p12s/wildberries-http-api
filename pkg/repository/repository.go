@@ -11,6 +11,9 @@ type Authorization interface {
 }
 
 type Comment interface {
+	Create(userId int, comment common.Comment) (int, error)
+	GetAll(userId int) ([]common.Comment, error)
+	GetById(userId, listId int) (common.Comment, error)
 }
 
 type Repository struct {
@@ -21,5 +24,6 @@ type Repository struct {
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
 		Authorization: NewAuthPostgres(db),
+		Comment:       NewCommentPostgres(db),
 	}
 }
