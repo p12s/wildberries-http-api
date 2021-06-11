@@ -28,7 +28,7 @@ func (r *UserPostgres) Create(user common.User) (int, error) {
 
 	row := r.db.QueryRow(query, user.Name, user.Email, user.Username, user.Password)
 	if err := row.Scan(&id); err != nil {
-		tx.Rollback()
+		_ = tx.Rollback()
 		return 0, err
 	}
 

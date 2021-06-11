@@ -28,7 +28,7 @@ func (r *CommentPostgres) Create(idUser int, comment common.Comment) (int, error
 	row := tx.QueryRow(query, idUser, comment.Txt)
 
 	if err := row.Scan(&id); err != nil {
-		tx.Rollback()
+		_ = tx.Rollback()
 		return 0, err
 	}
 
