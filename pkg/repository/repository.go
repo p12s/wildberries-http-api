@@ -35,6 +35,6 @@ func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
 		Authorization: NewAuthPostgres(db),
 		Comment:       NewCommentPostgres(db),
-		User:       NewUserPostgres(db),
+		User:          NewUserPostgres(db),
 	}
 }

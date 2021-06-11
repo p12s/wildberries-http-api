@@ -39,7 +39,7 @@ func NewService(repos *repository.Repository) *Service {
 	return &Service{
 		Authorization: NewAuthService(repos.Authorization),
 		Comment:       NewCommentService(repos.Comment),
-		User: NewUserService(repos.User),
+		User:          NewUserService(repos.User),
 	}
 }
 

@@ -23,8 +23,8 @@ func (u UpdateCommentInput) Validate() error {
 }
 
 type UpdateUserInput struct {
-	Name *string `json:"name"`
-	Email *string `json:"email"`
+	Name     *string `json:"name"`
+	Email    *string `json:"email"`
 	Username *string `json:"username"`
 	Password *string `json:"password"`
 }
