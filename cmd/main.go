@@ -15,11 +15,16 @@ import (
 	"syscall"
 )
 
-// TODO добавить доку
-// TODO переделать логирование на Zap
-
+// @title User-comment API
+// @version 0.1
+// @description API Server for users and their comments
+// @host localhost:80
+// @BasePath /
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Authorization
 func main() {
-	logrus.SetFormatter(new(logrus.JSONFormatter))
+	logrus.SetFormatter(new(logrus.JSONFormatter)) // TODO переделать логирование на Zap
 
 	if err := initConfig(); err != nil {
 		logrus.Fatalf("Error init configs: %s\n", err.Error())

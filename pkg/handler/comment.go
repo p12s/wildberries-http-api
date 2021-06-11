@@ -7,6 +7,19 @@ import (
 	"strconv"
 )
 
+// @Summary Create comment
+// @Security ApiKeyAuth
+// @Tags comment
+// @Description create common Comment
+// @ID create-comment
+// @Accept  json
+// @Produce  json
+// @Param input body common.Comment true "list info"
+// @Success 200 {integer} integer 1
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /api/v1/user/:id/comment [post]
 func (h *Handler) createComment(c *gin.Context) {
 	idUser, err := getUserId(c)
 	if err != nil {
