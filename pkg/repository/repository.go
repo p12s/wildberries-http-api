@@ -18,14 +18,23 @@ type Comment interface {
 	Delete(idUser, commentId int) error
 }
 
+type User interface {
+	Create(user common.User) (int, error)
+	GetById(idUser int) (common.User, error)
+	Update(id int, input common.UpdateUserInput) error
+	Delete(idUser int) error
+}
+
 type Repository struct {
 	Authorization
 	Comment
+	User
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
 		Authorization: NewAuthPostgres(db),
 		Comment:       NewCommentPostgres(db),
+		User:       NewUserPostgres(db),
 	}
 }

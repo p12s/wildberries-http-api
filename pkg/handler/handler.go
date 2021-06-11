@@ -31,7 +31,6 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		user := api.Group("/user")
 		{
 			user.POST("/", h.createUser)      // добавление
-			user.GET("/", h.getAllUsers)      // просмотр всех
 			user.GET("/:id", h.getUserById)   // просмотр
 			user.PUT("/:id", h.updateUser)    // редактирование
 			user.DELETE("/:id", h.deleteUser) // удаление

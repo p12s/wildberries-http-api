@@ -1,9 +1,7 @@
 package service
 
 import (
-	"crypto/sha1"
 	"errors"
-	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/p12s/wildberries-http-api"
 	"github.com/p12s/wildberries-http-api/pkg/repository"
@@ -22,14 +20,8 @@ func NewAuthService(repo repository.Authorization) *AuthService {
 }
 
 func (s *AuthService) CreateUser(user common.User) (int, error) {
-	user.Password = generatePasswordHash(user.Password)
+	user.Password = GeneratePasswordHash(user.Password)
 	return s.repo.CreateUser(user)
-}
-
-func generatePasswordHash(password string) string {
-	hash := sha1.New()
-	hash.Write([]byte(password))
-	return fmt.Sprintf("%x", hash.Sum([]byte(viper.GetString("db.salt"))))
 }
 
 type tokenClaims struct {
@@ -38,7 +30,7 @@ type tokenClaims struct {
 }
 
 func (s *AuthService) GenerateToken(username, password string) (string, error) {
-	user, err := s.repo.GetUser(username, generatePasswordHash(password))
+	user, err := s.repo.GetUser(username, GeneratePasswordHash(password))
 	if err != nil {
 		return "", err
 	}
