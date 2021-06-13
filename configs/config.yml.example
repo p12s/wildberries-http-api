@@ -1,4 +1,5 @@
 port: "80"
+limitMaxConnections: 20
 
 db:
   host: "localhost" # endpoint - по АПИ будем ходить на localhost
@@ -6,4 +7,5 @@ db:
   schema: ""
   dbname: "postgres"
   sslmode: "disable"
-  salt: "s11212-df2309dsfso1[9wasdf1[0wf23"
+  salt: "######################"
+  signingKey: "######################"

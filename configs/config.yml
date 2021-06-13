@@ -1,4 +1,5 @@
 port: "80"
+limitMaxConnections: 20
 
 db:
   host: "localhost" # endpoint - по АПИ будем ходить на localhost

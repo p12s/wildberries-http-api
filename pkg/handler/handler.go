@@ -16,8 +16,21 @@ func NewHandler(services *service.Service) *Handler {
 	return &Handler{services: services}
 }
 
-func (h *Handler) InitRoutes() *gin.Engine {
+func limitMaxConnections(n int) gin.HandlerFunc {
+	sem := make(chan struct{}, n)
+	acquire := func() { sem <- struct{}{} }
+	release := func() { <-sem }
+	return func(c *gin.Context) {
+		acquire()       // before request
+		defer release() // after request
+		c.Next()
+
+	}
+}
+
+func (h *Handler) InitRoutes(limitMaxConnection int) *gin.Engine {
 	router := gin.New()
+	router.Use(limitMaxConnections(limitMaxConnection)) // уменьшение максимального кол-ва может ускорить ответ. Но надо тестировать
 
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
