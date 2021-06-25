@@ -1,6 +1,6 @@
 ![License](https://img.shields.io/github/license/p12s/wildberries-http-api?style=plastic)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/p12s/wildberries-http-api?style=plastic)
-<img src="https://github.com/p12s/wildberries-http-api/workflows/lint-build/badge.svg?branch=master">
+<img src="https://github.com/p12s/wildberries-http-api/workflows/lint-build/badge.svg?branch=main">
 
 **Внимание:** *я не являюсь ни автором задания, ни даже сотрудником компании автора. Я просто нашел ее на просторах github-а и, для обучения и тренировки, попробовал решить ее в меру своего понимания.*   
 
