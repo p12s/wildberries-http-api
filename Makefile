@@ -3,7 +3,7 @@
 .DEFAULT_GOAL := run
 
 build:
-	go mod download && CGO_ENABLED=0 GOOS=linux go build -o ./.bin/app ./cmd/main.go
+	go mod download && go build cmd/main.go
 
 test:
 	go test --short -coverprofile=cover.out -v ./...
