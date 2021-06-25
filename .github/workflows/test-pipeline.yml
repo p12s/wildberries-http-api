@@ -20,6 +20,7 @@ jobs:
         run: |
           echo "${{ env.APP_NAME }}"
           echo "${{ env.SOME_VAR }}"
+          echo "GitHub secrets trying: ${{ secrets.TEST }}"
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v2
         with:
